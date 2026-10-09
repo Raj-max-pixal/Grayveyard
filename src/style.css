@@ -2,34 +2,36 @@
 @media(max-width:1100px){.sidebar{width:210px}main{margin-left:210px;padding:0 25px 50px}.hero{padding:30px}.revival-orb{right:3%}.project-grid{grid-template-columns:repeat(2,1fr)}.metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.sidebar{width:250px;transform:translateX(-100%);transition:transform .25s}.sidebar.open{transform:translateX(0)}.drawer-scrim{display:block;position:fixed;inset:0;background:#0008;z-index:10;border:0}main{margin:0;padding:0 16px 45px}.topbar{height:82px}.top-title p{display:none}.top-title h1{font-size:17px}.mobile-menu{display:grid;margin-right:10px}.top-actions .icon-button{display:none}.add-top span{display:none}.add-top{padding:9px}.hero{min-height:300px;padding:27px 22px}.hero h2{font-size:31px}.hero-copy{max-width:360px}.revival-orb{transform:scale(.72);transform-origin:center;right:-52px;top:auto;bottom:-18px;opacity:.75}.overview-grid,.analytics-grid,.detail-grid,.settings-grid{grid-template-columns:1fr}.project-grid,.wall-grid{grid-template-columns:1fr}.section-heading h2,.detail-roadmap-head h2{font-size:25px}.detail-hero,.wall-intro{align-items:flex-start;flex-direction:column}.detail-actions{flex-wrap:wrap}.donut-wrap{justify-content:flex-start}.filters .search-field{flex-basis:100%;max-width:none}.vault-grid.list .project-card{display:block}.vault-grid.list .project-card h3{margin:10px 0}.vault-grid.list .project-card .project-progress{display:block}}@media(max-width:500px){.metrics{gap:8px}.metric{padding:14px}.metric>span{font-size:11px}.metric strong{font-size:23px}.hero-actions{flex-wrap:wrap}.hero .secondary{background:#151a2b}.spot-content{flex-wrap:wrap}.strategy-grid,.form-grid{grid-template-columns:1fr}.form-grid .span-two{grid-column:auto}.modal{padding:18px}.section-heading{align-items:flex-start;flex-direction:column}.task{gap:5px}.task-icon{padding:3px}.priority{display:none}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 [data-theme=light]{--bg:#f5f6fb;--side:#eaeef7;--surface:#fff;--surface2:#f6f7fb;--line:#d7dce9;--text:#20263b;--muted:#606a83;--soft:#3b4660}.app-shell{transition:background .2s,color .2s}[data-theme=light] .hero{background:radial-gradient(circle at 75% 40%,#e5e1ff,#f6f7fc 60%)}[data-theme=light] .panel,[data-theme=light] .detail-hero{background:#fff}[data-theme=light] .nav-item:hover,[data-theme=light] .nav-item.active{background:#dfe4f2}[data-theme=light] .next-move,[data-theme=light] .sidebar-message{background:#e3e7f4}[data-theme=light] .modal{background:#fff}[data-theme=light] .strategy-card{background:#f6f7fb}[data-theme=light] .form-grid input,[data-theme=light] .form-grid textarea,[data-theme=light] .form-grid select,[data-theme=light] .settings-label input{background:#fff}[data-theme=light] .project-progress,[data-theme=light] .reason-track{background:#e3e6ef}
 
-/* Instagram-inspired black canvas with restrained story-ring accents. */
-:root{--bg:#000;--side:#050505;--surface:#0d0d0f;--surface2:#151517;--line:#29292c;--text:#fafafa;--muted:#a3a3aa;--soft:#e3e3e8;--violet:#d65caa;--blue:#9b6bf2;--mint:#83d9bc}
+/* Instagram-like black canvas with electric blue accents. */
+:root{--bg:#000;--side:#050505;--surface:#0d0d0f;--surface2:#151517;--line:#29292c;--text:#fafafa;--muted:#a3a3aa;--soft:#e3e3e8;--violet:#448dff;--blue:#39b3ff;--mint:#83d9bc}
 .ambient{opacity:.075}
-.ambient.one{background:#c13584}.ambient.two{background:#833ab4}
+.ambient.one{background:#1169e9}.ambient.two{background:#19a9ff}
 .sidebar{background:#050505}
-.sidebar-message{background:#111113;border-color:#2c252e}
+.sidebar-message{background:#111316;border-color:#27333f}
 .nav-item:hover,.nav-item.active{background:#1b1b1d}
-.nav-item.active svg{color:#f58bb9}
-.brand-mark{background:linear-gradient(135deg,#fcb045,#fd1d1d 48%,#833ab4);box-shadow:0 0 25px #c1358452}
+.nav-item.active svg{color:#7cbdff}
+.brand-mark{background:linear-gradient(135deg,#38c5ff,#2378ef 55%,#1550c8);box-shadow:0 0 25px #2378ef65}
 .vault-count{background:#111113}
-.primary{background:linear-gradient(110deg,#b53e8d,#d4478c 52%,#f07271);box-shadow:0 8px 22px #c1358431}
-.primary:hover{box-shadow:0 10px 28px #c1358458}
-.hero{background:radial-gradient(circle at 76% 42%,#2a1526 0,#120e13 36%,#080809 76%);border-color:#382735}
-.hero h2 em,.kicker{color:#ff9fc3}
-.orbit{border-color:#d55e9b6b}
-.orb-core{background:radial-gradient(circle at 30% 25%,#ffd493,#f26982 45%,#8e3ba9 84%);box-shadow:0 0 55px #ba4d8a72}
+.primary{background:linear-gradient(110deg,#155dde,#2385f0 52%,#3bb7ff);box-shadow:0 8px 22px #2486ef40}
+.primary:hover{box-shadow:0 10px 28px #2486ef66}
+.hero{background:radial-gradient(circle at 76% 42%,#10294b 0,#0b1523 36%,#08090b 76%);border-color:#223e5d}
+.hero h2 em,.kicker{color:#8ccaff}
+.orbit{border-color:#5eb6ff80}
+.orb-core{background:radial-gradient(circle at 30% 25%,#b3e9ff,#419dff 45%,#164bc4 84%);box-shadow:0 0 55px #248eff80}
 .metric,.panel{background:#0d0d0f}
 .metric:after{opacity:.13}
+.metric:nth-child(2):after{background:#429dff}
 .project-card{background:#151517;border-color:#303034}
-.project-card:hover{border-color:#b84e89;box-shadow:0 12px 28px #d34f8424}
-.project-glyph,.spot-glyph,.detail-symbol{color:#fff;background:linear-gradient(135deg,#fcb045,#f05b7b 55%,#833ab4)}
-.project-glyph{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px solid #ef7399;box-shadow:0 0 0 2px #151517,0 0 0 3px #9b508f}
-.badge{background:#30202c;color:#ffc0d9}.badge.reviving{background:#18342d;color:#9ae5c7}.badge.planning-revival{background:#29213d;color:#cbb4ff}
-.project-progress span,.reason-track i{background:linear-gradient(90deg,#b84b9a,#f07980)}
-.next-move{background:#1b171c}.next-move b,.text-button,.back-link,.repo-link{color:#f28dbb}
-.icon-button:hover,.icon-button.selected{border-color:#a84b85;background:#281b27;color:#ffd2e5}
+.project-card:hover{border-color:#398df1;box-shadow:0 12px 28px #2486ef28}
+.project-glyph,.spot-glyph,.detail-symbol{color:#fff;background:linear-gradient(135deg,#43c8ff,#298ff1 55%,#1854c8)}
+.project-glyph{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;border:2px solid #60baff;box-shadow:0 0 0 2px #151517,0 0 0 3px #2975cb}
+.badge{background:#1b3047;color:#b6dbff}.badge.reviving{background:#183b38;color:#9ae5c7}.badge.planning-revival{background:#1a2e4c;color:#b4d8ff}
+.project-progress span,.reason-track i{background:linear-gradient(90deg,#2378ef,#54bcff)}
+.next-move{background:#121d2a}.next-move b,.text-button,.back-link,.repo-link{color:#8bc9ff}
+.icon-button:hover,.icon-button.selected{border-color:#3c8fe5;background:#142941;color:#bce2ff}
 .donut-wrap,.chart-area{filter:saturate(.9)}
-.modal{background:#121214;border-color:#373039}.strategy-card{background:#19171a}
-.wall-note{background:linear-gradient(135deg,#1a1319,#0e0d0e);border-color:#392b36}
-.wall-note>span,.wall-intro svg{color:#f18dbb}
+.modal{background:#121416;border-color:#2b4056}.strategy-card{background:#151a20}
+.wall-note{background:linear-gradient(135deg,#111d2b,#0e0f12);border-color:#263e56}
+.wall-note>span,.wall-intro svg{color:#8ecbff}
+.avatar{background:linear-gradient(135deg,#1966e7,#56c2ff)}
 [data-theme=light]{--bg:#f5f6fb;--side:#eaeef7;--surface:#fff;--surface2:#f6f7fb;--line:#d7dce9;--text:#20263b;--muted:#606a83;--soft:#3b4660}
