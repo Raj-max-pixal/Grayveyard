@@ -21,6 +21,11 @@ Open the Local URL printed by Vite. For a production build, run `npm run build`;
 - Timeline of actions recorded in the app
 - Analytics based on current vault data
 - Personal revival wall, theme selection, JSON export and validated import
+- Personal task manager with priorities, due dates, project links, filters, and completion tracking
+- Idea inbox with pinning and one-click conversion into personal tasks
+- Focus Studio with 15, 25, and 50 minute sessions that survive refreshes
 - Four clearly marked demonstration projects on first launch
 
 Data stays in the browser and does not sync across devices. Export a backup before clearing browser data. The assistant's suggestions are local rules and do not inspect source repositories.
+
+The personal space has its own export button. Project vault data and personal tasks are stored separately in LocalStorage.
