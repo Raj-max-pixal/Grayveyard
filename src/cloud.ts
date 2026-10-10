@@ -11,13 +11,13 @@ const list=async <T,>(uid:string,name:string):Promise<T[]>=>{
  return snap.docs.map(x=>x.data() as T);
 };
 
-export async function loadWorkspace(uid:string):Promise<Workspace>{
+export async function loadWorkspace(uid:string,fallbackName='Maker'):Promise<Workspace>{
  const [projects,events,wins,tasks,ideas,profile,focus]=await Promise.all([
   list<Project>(uid,'projects'),list<Event>(uid,'events'),list<Vault['wins'][number]>(uid,'wins'),
   list<PersonalTask>(uid,'personalTasks'),list<Idea>(uid,'ideas'),
   getDoc(entry(uid,'meta','profile')),getDoc(entry(uid,'meta','focus'))
  ]);
- const vault={...emptyVault(),projects,events:events.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),wins:wins.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),displayName:profile.exists()&&typeof profile.data().displayName==='string'?profile.data().displayName:'Maker'};
+ const vault={...emptyVault(),projects,events:events.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),wins:wins.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),displayName:profile.exists()&&typeof profile.data().displayName==='string'?profile.data().displayName:fallbackName};
  const hub:Hub={...emptyHub,tasks,ideas,focus:focus.exists()?{...emptyHub.focus,...focus.data()}:emptyHub.focus};
  return {vault,hub};
 }

@@ -8,6 +8,9 @@
 .cloud-card input{min-height:46px;padding:0 14px;border-radius:11px;border:1px solid #33415b;background:#0a101c;color:#fff;font:inherit}
 .cloud-card input:focus{outline:2px solid #3984ff;outline-offset:1px}
 .cloud-card form .primary{justify-content:center;min-height:46px}
+.google-button{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:48px;margin-top:24px;border:1px solid #465777;border-radius:11px;background:#fff;color:#1e293b;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.google-button:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 9px 28px #3979ff35}.google-button:disabled{opacity:.6;cursor:wait}.google-logo{font-family:Arial,sans-serif;font-size:21px;font-weight:800;color:#4285f4;text-shadow:-1px 1px #34a853,1px -1px #ea4335}
+.cloud-divider{display:flex;align-items:center;gap:14px;margin-top:20px;color:#77869d;font-size:10px;font-weight:700;letter-spacing:.16em}.cloud-divider:before,.cloud-divider:after{content:"";height:1px;flex:1;background:#2c3a51}
 .cloud-links{display:flex;justify-content:space-between;gap:15px;margin:16px 0 28px}
 .cloud-links button,.cloud-account button,.cloud-alert button{border:0;background:none;color:#77adff;cursor:pointer;font:inherit}
 .cloud-links button:hover,.cloud-account button:hover,.cloud-alert button:hover{text-decoration:underline}

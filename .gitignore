@@ -6,5 +6,6 @@ github-grayveyard/
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+firebase.google.local.json
 .vercel
 .env*

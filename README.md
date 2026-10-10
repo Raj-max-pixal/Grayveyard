@@ -24,10 +24,11 @@ Open the Local URL printed by Vite. For a production build, run `npm run build`;
 - Personal task manager with priorities, due dates, project links, filters, and completion tracking
 - Idea inbox with pinning and one-click conversion into personal tasks
 - Focus Studio with 15, 25, and 50 minute sessions that survive refreshes
-- Email/password sign-in and password reset
+- Email/password sign-in, Google sign-in, and password reset
+- Profile page with display name, email verification, connected sign-in methods, Google account linking, and sign-out
 - Separate cloud workspace for each signed-in user; new accounts start empty
 - One-time, opt-in import of projects and personal data from the prior browser-only version
 
 Firestore data lives under `users/{uid}` with separate `projects`, `events`, `wins`, `personalTasks`, `ideas`, and `meta` collections. Security rules permit access only when the authenticated user's UID matches that path. Changes are written to Firebase; another device sees the latest data after sign-in or reload. Theme preference remains local to each browser. Export JSON backups before clearing cloud data. The assistant's suggestions are local rules and do not inspect source repositories.
 
-The personal space has its own export button. The legacy browser data is never deleted by migration. To redeploy Firebase configuration and rules, run `firebase deploy --only firestore:rules,auth --project project-graveyard-2026` from the project root.
+The personal space has its own export button. The legacy browser data is never deleted by migration. To redeploy database access rules, run `firebase deploy --only firestore:rules --project project-graveyard-2026` from the project root. Email/password and Google providers are enabled in Firebase Authentication. Google OAuth authorizes the Vercel production domain and the private Sites domain. The OAuth support email is configured in Firebase, not committed to this repository.
