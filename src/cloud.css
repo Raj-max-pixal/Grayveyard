@@ -1,0 +1,20 @@
+.cloud-screen{min-height:100vh;display:grid;place-items:center;padding:32px;background:radial-gradient(circle at 50% 0%,#102c59 0%,#080b12 46%,#050609 100%);color:#f6f8ff}
+.cloud-card{width:min(100%,460px);padding:38px;border:1px solid #26334d;border-radius:26px;background:linear-gradient(155deg,#141b2a,#0b0f18);box-shadow:0 24px 85px #0009}
+.cloud-card h1{font-size:clamp(28px,4vw,40px);line-height:1.12;margin:15px 0}
+.cloud-card p{color:#b4bfd2;line-height:1.55}
+.cloud-mark{display:grid;place-items:center;width:54px;height:54px;margin-bottom:24px;border-radius:16px;background:#1468ff;color:white;font-size:32px;box-shadow:0 10px 30px #1468ff55}
+.cloud-card form{display:grid;gap:17px;margin:26px 0 16px}
+.cloud-card label{display:grid;gap:8px;font-size:13px;color:#bdc7d8}
+.cloud-card input{min-height:46px;padding:0 14px;border-radius:11px;border:1px solid #33415b;background:#0a101c;color:#fff;font:inherit}
+.cloud-card input:focus{outline:2px solid #3984ff;outline-offset:1px}
+.cloud-card form .primary{justify-content:center;min-height:46px}
+.cloud-links{display:flex;justify-content:space-between;gap:15px;margin:16px 0 28px}
+.cloud-links button,.cloud-account button,.cloud-alert button{border:0;background:none;color:#77adff;cursor:pointer;font:inherit}
+.cloud-links button:hover,.cloud-account button:hover,.cloud-alert button:hover{text-decoration:underline}
+.cloud-card small{color:#8996ad;line-height:1.5}
+.cloud-error{color:#ff9ba8!important}
+.cloud-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}
+.cloud-account{position:fixed;right:20px;bottom:18px;z-index:20;display:flex;align-items:center;gap:15px;max-width:calc(100vw - 40px);padding:10px 14px;border:1px solid #2c3b56;border-radius:13px;background:#0c1424ed;color:#b9c8dd;box-shadow:0 10px 35px #0008;font-size:12px}
+.cloud-account strong{max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#edf4ff}
+.cloud-alert{position:fixed;left:50%;top:15px;transform:translateX(-50%);z-index:50;display:flex;gap:15px;max-width:min(90vw,700px);padding:12px 16px;border:1px solid #9e3b50;border-radius:10px;background:#391321;color:#fff;font-size:13px}
+@media(max-width:650px){.cloud-account{left:8px;right:8px;bottom:8px;justify-content:space-between;gap:8px}.cloud-account strong{display:none}.cloud-card{padding:26px}.cloud-screen{padding:16px}}

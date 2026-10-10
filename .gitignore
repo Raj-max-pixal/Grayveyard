@@ -3,6 +3,8 @@ node_modules/
 site-bundle.tar.gz
 write-test.txt
 github-grayveyard/
-
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
 .vercel
 .env*

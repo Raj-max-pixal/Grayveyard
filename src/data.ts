@@ -4,6 +4,7 @@ export type Task={id:string;title:string;description:string;priority:Priority;ef
 export type Project={id:string;name:string;description:string;originalGoal:string;category:string;repositoryUrl:string;technologies:string[];completionPercentage:number;completedFeatures:string[];unfinishedFeatures:string[];abandonmentReason:string;lastWorkedOn:string;notes:string;status:Status;strategy?:'Resurrect'|'Repurpose'|'Archive';createdAt:string;updatedAt:string;revivedAt?:string;tasks:Task[];demo?:boolean};
 export type Event={id:string;projectId?:string;type:string;description:string;timestamp:string};
 export type Vault={version:1;projects:Project[];events:Event[];displayName:string;wins:{id:string;text:string;timestamp:string}[]};
+export const emptyVault=():Vault=>({version:1,projects:[],events:[],displayName:'Maker',wins:[]});
 export const uid=()=>crypto.randomUUID();
 const when='2026-10-10T00:00:00.000Z';
 const task=(title:string,completed=false):Task=>({id:uid(),title,description:'',priority:'Medium',effort:'1–2 hours',completed,createdAt:when,...(completed?{completedAt:when}:{})});
