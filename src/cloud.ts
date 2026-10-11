@@ -1,6 +1,6 @@
 import {collection,deleteDoc,doc,getDoc,getDocs,setDoc,writeBatch,type DocumentData,type DocumentReference} from 'firebase/firestore';
 import {db} from './firebase';
-import {emptyVault,type Event,type Project,type Vault} from './data';
+import {emptyVault,type Event,type PlannerItem,type Project,type Vault} from './data';
 import {emptyHub,type Hub,type Idea,type PersonalTask} from './PersonalHub';
 
 export type Workspace={vault:Vault;hub:Hub};
@@ -12,12 +12,13 @@ const list=async <T,>(uid:string,name:string):Promise<T[]>=>{
 };
 
 export async function loadWorkspace(uid:string,fallbackName='Maker'):Promise<Workspace>{
- const [projects,events,wins,tasks,ideas,profile,focus]=await Promise.all([
+ const [projects,events,wins,planner,tasks,ideas,profile,focus]=await Promise.all([
   list<Project>(uid,'projects'),list<Event>(uid,'events'),list<Vault['wins'][number]>(uid,'wins'),
+  list<PlannerItem>(uid,'planner'),
   list<PersonalTask>(uid,'personalTasks'),list<Idea>(uid,'ideas'),
   getDoc(entry(uid,'meta','profile')),getDoc(entry(uid,'meta','focus'))
  ]);
- const vault={...emptyVault(),projects,events:events.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),wins:wins.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),displayName:profile.exists()&&typeof profile.data().displayName==='string'?profile.data().displayName:fallbackName};
+ const vault={...emptyVault(),projects,planner,events:events.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),wins:wins.sort((a,b)=>b.timestamp.localeCompare(a.timestamp)),displayName:profile.exists()&&typeof profile.data().displayName==='string'?profile.data().displayName:fallbackName};
  const hub:Hub={...emptyHub,tasks,ideas,focus:focus.exists()?{...emptyHub.focus,...focus.data()}:emptyHub.focus};
  return {vault,hub};
 }
@@ -36,7 +37,7 @@ async function applyChanges(ops:ReturnType<typeof changes<Item>>){
 }
 
 export async function saveVault(uid:string,before:Vault,after:Vault){
- const ops=[...changes(uid,'projects',before.projects,after.projects),...changes(uid,'events',before.events,after.events),...changes(uid,'wins',before.wins,after.wins)];
+ const ops=[...changes(uid,'projects',before.projects,after.projects),...changes(uid,'events',before.events,after.events),...changes(uid,'wins',before.wins,after.wins),...changes(uid,'planner',before.planner,after.planner)];
  await applyChanges(ops);
  if(before.displayName!==after.displayName)await setDoc(entry(uid,'meta','profile'),{displayName:after.displayName});
 }

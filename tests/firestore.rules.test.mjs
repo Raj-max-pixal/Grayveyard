@@ -20,4 +20,7 @@ test('a signed-in user can write and read only their own workspace',async()=>{
  await assertFails(setDoc(doc(bob,'users/alice/projects/second'),{id:'second'}));
  await assertFails(getDoc(doc(guest,'users/alice/projects/first')));
  await assertFails(setDoc(doc(alice,'public/accidental'),{data:'no'}));
+ const exam=doc(alice,'users/alice/planner/exam-one');
+ await assertSucceeds(setDoc(exam,{id:'exam-one',kind:'exam',title:'Final exam'}));
+ await assertFails(getDoc(doc(bob,'users/alice/planner/exam-one')));
 });
