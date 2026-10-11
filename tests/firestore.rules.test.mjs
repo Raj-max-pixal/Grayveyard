@@ -24,3 +24,19 @@ test('a signed-in user can write and read only their own workspace',async()=>{
  await assertSucceeds(setDoc(exam,{id:'exam-one',kind:'exam',title:'Final exam'}));
  await assertFails(getDoc(doc(bob,'users/alice/planner/exam-one')));
 });
+
+test('community submissions stay pending until a trusted publisher approves them',async()=>{
+ const alice=env.authenticatedContext('alice').firestore();
+ const bob=env.authenticatedContext('bob').firestore();
+ const guest=env.unauthenticatedContext().firestore();
+ const pending=doc(alice,'publicProjects/pending-one');
+ const submission={ownerId:'alice',name:'A real archive',shortDescription:'A sufficiently detailed description for a legitimate project.',repositoryUrl:'https://github.com/alice/archive',websiteUrl:'',category:'Developer Tools',languages:['TypeScript'],stack:['React'],submitterName:'Alice',status:'pending'};
+ await assertSucceeds(setDoc(pending,submission));
+ await assertSucceeds(getDoc(pending));
+ await assertFails(getDoc(doc(bob,'publicProjects/pending-one')));
+ await assertFails(getDoc(doc(guest,'publicProjects/pending-one')));
+ await assertFails(setDoc(pending,{...submission,status:'published'}));
+ await env.withSecurityRulesDisabled(async context=>setDoc(doc(context.firestore(),'publicProjects/published-one'),{...submission,ownerId:'moderator',status:'published'}));
+ await assertSucceeds(getDoc(doc(guest,'publicProjects/published-one')));
+ await assertFails(setDoc(doc(bob,'publicProjects/pending-one'),{...submission,ownerId:'alice',status:'pending'}));
+});

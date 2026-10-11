@@ -4,5 +4,35 @@ service cloud.firestore {
     match /users/{userId}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
+
+    // Public discovery exposes only moderator-approved records. Authors can
+    // create and inspect their own pending submissions, but cannot publish
+    // or change ownership from the browser.
+    match /publicProjects/{projectId} {
+      allow read: if resource.data.status == 'published'
+        || (request.auth != null && resource.data.ownerId == request.auth.uid);
+      allow create: if request.auth != null
+        && request.resource.data.ownerId == request.auth.uid
+        && request.resource.data.status == 'pending'
+        && request.resource.data.name is string
+        && request.resource.data.name.size() >= 3
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.shortDescription is string
+        && request.resource.data.shortDescription.size() >= 20
+        && request.resource.data.shortDescription.size() <= 600
+        && request.resource.data.repositoryUrl is string
+        && request.resource.data.repositoryUrl.matches('^https://(www\\.)?github\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/?$')
+        && request.resource.data.websiteUrl is string
+        && request.resource.data.websiteUrl.size() <= 240
+        && request.resource.data.category is string
+        && request.resource.data.languages is list
+        && request.resource.data.stack is list
+        && request.resource.data.submitterName is string
+        && request.resource.data.submitterName.size() <= 60;
+      allow update, delete: if request.auth != null
+        && resource.data.ownerId == request.auth.uid
+        && request.resource.data.ownerId == resource.data.ownerId
+        && request.resource.data.status == resource.data.status;
+    }
   }
 }
