@@ -1,7 +1,7 @@
 export type Status='Abandoned'|'Planning Revival'|'Reviving'|'Revived'|'Archived';
 export type Priority='Critical'|'High'|'Medium'|'Low';
 export type Task={id:string;title:string;description:string;priority:Priority;effort:string;completed:boolean;createdAt:string;completedAt?:string};
-export type Project={id:string;name:string;description:string;originalGoal:string;category:string;repositoryUrl:string;technologies:string[];completionPercentage:number;completedFeatures:string[];unfinishedFeatures:string[];abandonmentReason:string;lastWorkedOn:string;notes:string;deadline?:string;reminderAt?:string;status:Status;strategy?:'Resurrect'|'Repurpose'|'Archive';createdAt:string;updatedAt:string;revivedAt?:string;tasks:Task[];demo?:boolean};
+export type Project={id:string;name:string;description:string;originalGoal:string;category:string;repositoryUrl:string;technologies:string[];completionPercentage:number;completedFeatures:string[];unfinishedFeatures:string[];abandonmentReason:string;lastWorkedOn:string;notes:string;deadline?:string;reminderAt?:string;status:Status;strategy?:'Resurrect'|'Continue'|'Repurpose'|'Archive';createdAt:string;updatedAt:string;revivedAt?:string;tasks:Task[];demo?:boolean};
 export type Event={id:string;projectId?:string;type:string;description:string;timestamp:string};
 export type PlannerKind='exam'|'study'|'milestone'|'personal';
 export type PlannerItem={id:string;kind:PlannerKind;title:string;startsAt:string;reminderAt:string;notes:string;projectId:string;done:boolean;createdAt:string};
