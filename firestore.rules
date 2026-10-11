@@ -1,6 +1,9 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null && request.auth.token.admin == true;
+    }
     match /users/{userId}/{document=**} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
@@ -9,7 +12,7 @@ service cloud.firestore {
     // create and inspect their own pending submissions, but cannot publish
     // or change ownership from the browser.
     match /publicProjects/{projectId} {
-      allow read: if resource.data.status == 'published'
+      allow read: if isAdmin() || resource.data.status == 'published'
         || (request.auth != null && resource.data.ownerId == request.auth.uid);
       allow create: if request.auth != null
         && request.resource.data.ownerId == request.auth.uid
@@ -29,10 +32,40 @@ service cloud.firestore {
         && request.resource.data.stack is list
         && request.resource.data.submitterName is string
         && request.resource.data.submitterName.size() <= 60;
-      allow update, delete: if request.auth != null
-        && resource.data.ownerId == request.auth.uid
-        && request.resource.data.ownerId == resource.data.ownerId
-        && request.resource.data.status == resource.data.status;
+      allow update, delete: if (isAdmin()
+        && request.resource.data.ownerId == resource.data.ownerId)
+        || (request.auth != null
+          && resource.data.ownerId == request.auth.uid
+          && request.resource.data.ownerId == resource.data.ownerId
+          && request.resource.data.status == resource.data.status);
+
+      match /proposals/{proposalId} {
+        allow read: if get(/databases/$(database)/documents/publicProjects/$(projectId)).data.status == 'published';
+        allow create: if request.auth != null
+          && get(/databases/$(database)/documents/publicProjects/$(projectId)).data.status == 'published'
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.status == 'Proposed'
+          && request.resource.data.title is string
+          && request.resource.data.title.size() >= 4
+          && request.resource.data.title.size() <= 120
+          && request.resource.data.problem is string
+          && request.resource.data.problem.size() >= 12
+          && request.resource.data.solution is string
+          && request.resource.data.solution.size() >= 12;
+        allow update, delete: if isAdmin() || (request.auth != null
+          && resource.data.authorId == request.auth.uid
+          && request.resource.data.authorId == resource.data.authorId
+          && request.resource.data.status == resource.data.status);
+        match /interests/{userId} {
+          allow read: if get(/databases/$(database)/documents/publicProjects/$(projectId)).data.status == 'published';
+          allow create, update, delete: if request.auth != null && request.auth.uid == userId;
+        }
+      }
+    }
+
+    match /moderationAudit/{actionId} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
     }
   }
 }

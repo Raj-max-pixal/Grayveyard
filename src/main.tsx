@@ -5,4 +5,6 @@ import './style.css';
 import './rescue.css';
 import './momentum.css';
 import './community.css';
+import './admin.css';
+import './resurrection.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><CloudGate/></React.StrictMode>);

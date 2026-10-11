@@ -40,3 +40,25 @@ test('community submissions stay pending until a trusted publisher approves them
  await assertSucceeds(getDoc(doc(guest,'publicProjects/published-one')));
  await assertFails(setDoc(doc(bob,'publicProjects/pending-one'),{...submission,ownerId:'alice',status:'pending'}));
 });
+
+test('a trusted admin can moderate and audit without changing ownership',async()=>{
+ const moderator=env.authenticatedContext('moderator',{admin:true}).firestore();
+ const alice=env.authenticatedContext('alice').firestore();
+ const pending=doc(moderator,'publicProjects/admin-check');
+ await env.withSecurityRulesDisabled(async context=>setDoc(doc(context.firestore(),'publicProjects/admin-check'),{ownerId:'alice',name:'Admin review',shortDescription:'A sufficiently detailed description for review.',repositoryUrl:'https://github.com/alice/review',websiteUrl:'',category:'Open Source',languages:[],stack:[],submitterName:'Alice',status:'pending',createdAt:'2026-10-11T00:00:00.000Z'}));
+ await assertSucceeds(getDoc(pending));
+ await assertSucceeds(setDoc(pending,{ownerId:'alice',name:'Admin review',shortDescription:'A sufficiently detailed description for review.',repositoryUrl:'https://github.com/alice/review',websiteUrl:'',category:'Open Source',languages:[],stack:[],submitterName:'Alice',status:'published',moderatedBy:'moderator'}));
+ await assertSucceeds(setDoc(doc(moderator,'moderationAudit/admin-check'),{projectId:'admin-check',action:'approved',moderatorUid:'moderator'}));
+ await assertFails(setDoc(doc(alice,'moderationAudit/not-alice'),{projectId:'admin-check'}));
+});
+
+test('resurrection proposals enforce project publication and author ownership',async()=>{
+ const alice=env.authenticatedContext('alice').firestore();
+ const bob=env.authenticatedContext('bob').firestore();
+ await env.withSecurityRulesDisabled(async context=>setDoc(doc(context.firestore(),'publicProjects/revival-project'),{ownerId:'owner',name:'Published project',status:'published'}));
+ const proposal=doc(alice,'publicProjects/revival-project/proposals/idea-one');
+ const value={projectId:'revival-project',authorId:'alice',title:'Improve the docs',problem:'The setup path is difficult for new contributors.',solution:'Add a tested quick-start guide and a troubleshooting page.',status:'Proposed'};
+ await assertSucceeds(setDoc(proposal,value));
+ await assertFails(setDoc(doc(bob,'publicProjects/revival-project/proposals/idea-one'),{...value,authorId:'alice'}));
+ await assertFails(setDoc(proposal,{...value,status:'Resurrected'}));
+});

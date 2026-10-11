@@ -1,5 +1,5 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
-import {createUserWithEmailAndPassword,GoogleAuthProvider,onAuthStateChanged,sendPasswordResetEmail,signInWithEmailAndPassword,signInWithPopup,signOut,type User} from 'firebase/auth';
+import {createUserWithEmailAndPassword,GoogleAuthProvider,getIdTokenResult,onAuthStateChanged,sendPasswordResetEmail,signInWithEmailAndPassword,signInWithPopup,signOut,type User} from 'firebase/auth';
 import App from './App';
 import {auth} from './firebase';
 import {legacyAvailable,loadWorkspace,saveHub,saveVault,type Workspace} from './cloud';
@@ -13,6 +13,7 @@ const mergeById=<T extends {id:string}>(cloud:T[],local:T[])=>{const ids=new Set
 
 export default function CloudGate(){
  const [user,setUser]=useState<User|null|undefined>(undefined);
+ const [isAdmin,setIsAdmin]=useState(false);
  const [workspace,setWorkspace]=useState<Workspace|null>(null);
  const [migration,setMigration]=useState(false);
  const [error,setError]=useState('');
@@ -22,9 +23,9 @@ export default function CloudGate(){
  const latestVault=useRef<Vault|null>(null),latestHub=useRef<Hub|null>(null);
  const pending=useRef(0);
  useEffect(()=>onAuthStateChanged(auth,async next=>{
-  setUser(next);setWorkspace(null);setError('');setMigration(false);
+  setUser(next);setWorkspace(null);setError('');setMigration(false);setIsAdmin(false);
   if(!next)return;
-  try{const data=await loadWorkspace(next.uid,next.displayName||'Maker');savedVault.current=data.vault;savedHub.current=data.hub;latestVault.current=data.vault;latestHub.current=data.hub;setWorkspace(data);setMigration(legacyAvailable()&&localStorage.getItem(`pg-migration-reviewed-${next.uid}`)!=='yes')}
+  try{const [data,token]=await Promise.all([loadWorkspace(next.uid,next.displayName||'Maker'),getIdTokenResult(next)]);setIsAdmin(token.claims.admin===true);savedVault.current=data.vault;savedHub.current=data.hub;latestVault.current=data.vault;latestHub.current=data.hub;setWorkspace(data);setMigration(legacyAvailable()&&localStorage.getItem(`pg-migration-reviewed-${next.uid}`)!=='yes')}
   catch(e){setError(`Could not load your Firebase workspace: ${friendly(e)}`)}
  }),[]);
  const onVaultChange=useCallback((next:Vault)=>{
@@ -51,7 +52,7 @@ export default function CloudGate(){
  if(!user)return <GuestGate/>;
  if(!workspace)return <div className="cloud-screen"><div className="cloud-card"><span className="cloud-mark">✦</span><h1>Loading your workspace…</h1>{error&&<p role="alert">{error}</p>}<button className="secondary" onClick={()=>signOut(auth)}>Sign out</button></div></div>;
  if(migration)return <div className="cloud-screen"><div className="cloud-card"><span className="cloud-mark">✦</span><span className="eyebrow">ONE-TIME TRANSFER</span><h1>Bring your old work with you?</h1><p>This browser has Project Graveyard data. Import copies projects, tasks, ideas, and wins to your private Firebase account. Cloud records with the same IDs stay unchanged. Your browser copy remains untouched.</p>{error&&<p role="alert" className="cloud-error">{error}</p>}<div className="cloud-actions"><button className="primary" onClick={importBrowser} disabled={sync==='saving'}>Import browser data</button><button className="secondary" onClick={()=>{localStorage.setItem(`pg-migration-reviewed-${user.uid}`,'yes');setMigration(false)}}>Start with cloud data</button></div></div></div>;
- return <><div className="cloud-account"><span>{sync==='saving'?'Saving to Firebase…':sync==='error'?'Sync needs attention':'● Firebase synced'}</span><strong>{user.email}</strong>{sync==='error'&&<button onClick={()=>{if(latestVault.current)onVaultChange(latestVault.current);if(latestHub.current)onHubChange(latestHub.current)}}>Retry save</button>}<button onClick={leave}>Sign out</button></div>{error&&<div className="cloud-alert" role="alert">{error}<button onClick={()=>setError('')}>Dismiss</button></div>}<App initialVault={workspace.vault} initialHub={workspace.hub} onVaultChange={onVaultChange} onHubChange={onHubChange} user={user} onSignOut={leave}/></>;
+ return <><div className="cloud-account"><span>{sync==='saving'?'Saving to Firebase…':sync==='error'?'Sync needs attention':'● Firebase synced'}</span><strong>{user.email}</strong>{sync==='error'&&<button onClick={()=>{if(latestVault.current)onVaultChange(latestVault.current);if(latestHub.current)onHubChange(latestHub.current)}}>Retry save</button>}<button onClick={leave}>Sign out</button></div>{error&&<div className="cloud-alert" role="alert">{error}<button onClick={()=>setError('')}>Dismiss</button></div>}<App initialVault={workspace.vault} initialHub={workspace.hub} onVaultChange={onVaultChange} onHubChange={onHubChange} user={user} isAdmin={isAdmin} onSignOut={leave}/></>;
 }
 
 function GuestGate(){
