@@ -10,7 +10,7 @@
 .sidebar-message{background:#111316;border-color:#27333f}
 .nav-item:hover,.nav-item.active{background:#1b1b1d}
 .nav-item.active svg{color:#7cbdff}
-.brand-mark{background:linear-gradient(135deg,#38c5ff,#2378ef 55%,#1550c8);box-shadow:0 0 25px #2378ef65}
+.brand-mark{background:linear-gradient(135deg,#38c5ff,#2378ef 55%,#1550c8);box-shadow:0 0 25px #2378ef65;object-fit:cover;object-position:center;display:block;border:1px solid #55bcff;box-shadow:0 0 18px #1e90ff80}
 .vault-count{background:#111113}
 .primary{background:linear-gradient(110deg,#155dde,#2385f0 52%,#3bb7ff);box-shadow:0 8px 22px #2486ef40}
 .primary:hover{box-shadow:0 10px 28px #2486ef66}
