@@ -819,3 +819,14 @@ Building software, exploring AI, and turning ideas into real projects.
 <sub>Project Graveyard — Every unfinished project deserves a second chance. 💜</sub>
 
 </div>
+
+---
+
+### Current app features
+
+- Public demo preview with a sign-in prompt after 10 seconds; add and save actions require Firebase email or Google sign-in.
+- Private Firestore workspaces for projects, personal tasks, ideas, and calendar entries.
+- Import public GitHub repository metadata, `.txt`/`.md` notes, pasted ideas, or a Project Graveyard JSON backup.
+- Project deadlines, exams, study sessions, browser reminders while the app is open, and `.ics` device-calendar downloads.
+
+Automatic reminder emails are **not enabled yet**. They need a verified mail-sending provider and a trusted scheduled backend; no email API key belongs in frontend code. GitHub import supports public repositories only.
